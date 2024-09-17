@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bird-fact-service
+  namespace: bird
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bird-fact-service
+  template:
+    metadata:
+      labels:
+        app: bird-fact-service
+    spec:
+      containers:
+      - name: bird-image-service
+        image: ehisakhile/bird-fact-service:1.0.0
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            cpu: 40m
+            memory: 64Mi
+        ports:
+        - containerPort: 4200
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bird-fact-service-svc
+  namespace: bird
+spec:
+  selector:
+    app: bird-fact-service
+  ports:
+    - protocol: TCP
+      port: 4200
+      targetPort: 4200
+  type: ClusterIP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: bird-fact-service-hpa
+  namespace: bird
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: bird-fact-service
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 15
