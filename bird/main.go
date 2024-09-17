@@ -8,6 +8,7 @@ import (
 	"math/rand/v2"
 	"net/http"
 	"net/url"
+	"os" // adding env file for bird-service listening on port 4200
 )
 
 type Bird struct {
@@ -25,12 +26,22 @@ func defaultBird(err error) Bird {
 }
 
 func getBirdImage(birdName string) (string, error) {
-    res, err := http.Get(fmt.Sprintf("http://localhost:4200?birdName=%s", url.QueryEscape(birdName)))
-    if err != nil {
-        return "", err
-    }
-    body, err := io.ReadAll(res.Body)
-    return string(body), err
+
+	// Read the BIRD_FACT_SERVICE_URL from environment variables
+	serviceURL := os.Getenv("BIRD_FACT_SERVICE_URL")
+
+	// Fallback to localhost if service url not set
+	if serviceURL == "" {
+		serviceURL = "http://localhost:4200"
+	}
+
+	// Make a request to the bird-fact-service using the dynamic URL
+	res, err := http.Get(fmt.Sprintf("%s?birdName=%s", serviceURL, url.QueryEscape(birdName)))
+	if err != nil {
+		return "", err
+	}
+	body, err := io.ReadAll(res.Body)
+	return string(body), err
 }
 
 func getBirdFactoid() Bird {
@@ -50,12 +61,12 @@ func getBirdFactoid() Bird {
 		fmt.Printf("Error unmarshalling bird: %s", err)
 		return defaultBird(err)
 	}
-    birdImage, err := getBirdImage(bird.Name)
-    if err != nil {
-        fmt.Printf("Error in getting bird image: %s\n", err)
-        return defaultBird(err)
-    }
-    bird.Image = birdImage
+	birdImage, err := getBirdImage(bird.Name)
+	if err != nil {
+		fmt.Printf("Error in getting bird image: %s\n", err)
+		return defaultBird(err)
+	}
+	bird.Image = birdImage
 	return bird
 }
 
@@ -67,5 +78,7 @@ func bird(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", bird)
+	// Show server listening url on terminal
+	print("Listening on localhost:4201")
 	http.ListenAndServe(":4201", nil)
 }
