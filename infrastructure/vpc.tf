@@ -24,8 +24,6 @@ resource "aws_subnet" "k8s-public-subnet" {
 
     tags = {
         Name = "${local.environment}-public-${each.key}"
-        "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-        "kubernetes.io/role/elb"                      = "1"
     }
 }
 
@@ -42,8 +40,6 @@ resource "aws_subnet" "k8s-private-subnet" {
 
     tags = {
         Name = "${local.environment}-private-${each.key}"
-        "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-        "kubernetes.io/role/elb"                      = "1"
     }
 }
 
