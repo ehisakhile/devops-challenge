@@ -1,9 +1,4 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: bird
 
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,7 +39,7 @@ metadata:
 spec:
   selector:
     app: bird-fact-app
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - protocol: TCP
       port: 80
