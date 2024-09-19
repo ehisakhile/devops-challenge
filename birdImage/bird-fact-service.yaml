@@ -16,12 +16,9 @@ spec:
       - name: bird-image-service
         image: ehisakhile/bird-fact-service:1.0.0
         resources:
-          requests:
-            cpu: 10m
-            memory: 64Mi
           limits:
-            cpu: 40m
-            memory: 64Mi
+            cpu: 100m
+            memory: 100Mi
         ports:
         - containerPort: 4200
 
