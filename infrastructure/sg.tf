@@ -54,6 +54,21 @@ resource "aws_security_group" "k8s_master_sg" {
     cidr_blocks = ["0.0.0.0/0"] 
   }
 
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+
   # Allow traffic for etcd server client API (port range 2379-2380)
   ingress {
     from_port   = 2379
@@ -107,6 +122,20 @@ resource "aws_security_group" "k8s_worker_sg" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]  # Open to the world for SSH access
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
   }
 
 

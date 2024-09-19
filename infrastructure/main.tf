@@ -15,7 +15,7 @@
 # MasterNode - EC2 instance
 resource "aws_instance" "master_node" {
   ami           = "ami-05134c8ef96964280"
-  instance_type = "t2.medium"
+  instance_type = "t2.large"
   key_name      = aws_key_pair.ec2_key.key_name
   subnet_id = aws_subnet.k8s-public-subnet.id
   vpc_security_group_ids = [aws_security_group.k8s_master_sg.id]
@@ -27,7 +27,7 @@ resource "aws_instance" "master_node" {
 # WorkerNode - EC2 instance
 resource "aws_instance" "worker_node" {
   ami           = "ami-05134c8ef96964280"
-  instance_type = "t2.medium"
+  instance_type = "t2.large"
   key_name      = aws_key_pair.ec2_key.key_name
   subnet_id = aws_subnet.k8s-public-subnet.id
   vpc_security_group_ids = [aws_security_group.k8s_worker_sg.id]
