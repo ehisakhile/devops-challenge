@@ -43,20 +43,13 @@ resource "aws_security_group" "k8s_master_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Open to the world for SSH access
+    cidr_blocks = ["0.0.0.0/0"] 
   }
 
   # Allow traffic for Kubernetes API server (port 6443)
   ingress {
     from_port   = 6443
     to_port     = 6443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] 
   }
@@ -76,6 +69,8 @@ resource "aws_security_group" "k8s_master_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # kube-scheduler	
   ingress {
     from_port   = 10259
     to_port     = 10259
@@ -83,7 +78,7 @@ resource "aws_security_group" "k8s_master_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-
+  # Kubelet API	
   ingress {
     from_port   = 10250
     to_port     = 10250
@@ -91,9 +86,32 @@ resource "aws_security_group" "k8s_master_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # kube-controller-manager	
   ingress {
     from_port   = 10257
     to_port     = 10257
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Ports for CoreDNS 
+  ingress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 9153
+    to_port     = 9153
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -121,13 +139,6 @@ resource "aws_security_group" "k8s_worker_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Open to the world for SSH access
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] 
   }
 
@@ -138,7 +149,7 @@ resource "aws_security_group" "k8s_worker_sg" {
     cidr_blocks = ["0.0.0.0/0"] 
   }
 
-
+  # Kubelet API	
   ingress {
     from_port   = 10250
     to_port     = 10250
@@ -146,6 +157,7 @@ resource "aws_security_group" "k8s_worker_sg" {
     cidr_blocks = ["0.0.0.0/0"] 
   }
 
+  # kube-proxy	
   ingress {
     from_port   = 10256
     to_port     = 10256
@@ -153,10 +165,32 @@ resource "aws_security_group" "k8s_worker_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Allow traffic for Kubelet API, Kube-scheduler, Kube-controller-manager (port range 10248-10260)
+  # Allow traffic for NodePorts
   ingress {
     from_port   = 30000
     to_port     = 32767
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+   # Ports for CoreDNS 
+  ingress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 9153
+    to_port     = 9153
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
