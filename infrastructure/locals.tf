@@ -1,5 +1,5 @@
 locals {
-  region = "us-west-2"
+  region = "us-east-2"
   environment = "k8s"
-  az = "us-west-2a"
+  az = "us-east-2c"
 }

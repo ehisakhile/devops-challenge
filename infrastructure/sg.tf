@@ -1,37 +1,37 @@
 # # Security Group for Bastion Host
-# resource "aws_security_group" "bastion_host_sg" {
-#   name        = "bastion-host-sg"
-#   description = "Security group for EC2 instances"
-#   vpc_id      = aws_vpc.k8s-vpc.id
+resource "aws_security_group" "bastion_host_sg" {
+  name        = "bastion-host-sg"
+  description = "Security group for EC2 instances"
+  vpc_id      = aws_vpc.k8s-vpc.id
 
-#   # Allow inbound traffic on port 80 (HTTP)
-#   ingress {
-#     from_port   = 80
-#     to_port     = 80
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]  # Open to the world for HTTP access
-#   }
+  # Allow inbound traffic on port 80 (HTTP)
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
 
-#   # Allow inbound traffic on port 22 (SSH)
-#   ingress {
-#     from_port   = 22
-#     to_port     = 22
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]  # Open to the world for SSH access
-#   }
+  # Allow inbound traffic on port 22 (SSH)
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#   # Allow all outbound traffic
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+  # Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#   tags = {
-#     Name = "bastion-host-sg"
-#   }
-# }
+  tags = {
+    Name = "bastion-host-sg"
+  }
+}
 
 resource "aws_security_group" "k8s_master_sg" {
   name        = "k8s-master-sg"
