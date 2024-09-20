@@ -4,8 +4,12 @@
 
 This project leverages helm/Kubernetes (K8s) to deploy, manage, and scale the bird API which I called *bird-fact-app* and birdImage API which I called *bird-fact-service*. The pods are designed with high availability and scalability in mind, using Kubernetes Horizontal Pod Autoscaling (HPA) to adjust the number of api instances based on real-time resource utilization.
 
+## Running Application
+
+You may access the application on this address: [http://3.138.194.89:30001/](http://3.138.194.89:30001/)
+
 ## Infrastructure
-The infrastructure was built using Terraform. You can find the infrastructure code in the [infrastructure](./infrastructure/) folder. To security, I set up a bastian host which is in the public subnet, the master and worker nodes are in the private subnet. To access the nodes, I opened SSH port (22). Other ports required by the nodes to work was also set.
+The infrastructure was built using Terraform. You can find the infrastructure code in the [infrastructure](./infrastructure/) folder. For security, I set up a bastian host which is in the public subnet, the master and worker nodes are in the private subnet. To access the nodes, I opened SSH port (22). Other ports required by the nodes to work was also set.
 
 ## K8s Cluster
 Setting up the cluster was quite a challenge but I was able to pull it off using K3s - a highly available, certified Kubernetes distribution designed for production workloads.
