@@ -1,5 +1,7 @@
 # Bird Application
 
+My Project Documentation is [ProjectDoc.md](./ProjectDoc.md)
+
 This is the bird Application! It gives us birds!!!
 
 The app is written in Golang and contains 2 APIs:
