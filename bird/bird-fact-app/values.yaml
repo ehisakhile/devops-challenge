@@ -1,0 +1,32 @@
+replicas: 1
+
+app:
+  name: bird-fact-app
+
+deployment:
+  name: bird-fact-app
+
+container:
+  name: bird-fact-app
+  image: ehisakhile/bird-fact-app:1.0.0
+  port: 4201
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 100Mi
+
+env:
+  BIRD_FACT_SERVICE_URL: "http://bird-fact-service-svc:4200"
+
+service:
+  name: bird-fact-app-svc
+  port: 4201
+  type: NodePort
+  nodePort: 30001
+
+hpa:
+  name: bird-fact-app-hpa
+  minReplicas: 1
+  maxReplicas: 3
+  cpuTargetUtilization: 15

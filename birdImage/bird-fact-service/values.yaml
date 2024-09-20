@@ -1,0 +1,28 @@
+replicas: 1
+
+app:
+  name: bird-fact-service
+
+deployment:
+  name: bird-fact-service
+
+container:
+  name: bird-image-service
+  image: ehisakhile/bird-fact-service:1.0.0
+  port: 4200
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 100Mi
+
+service:
+  name: bird-fact-service-svc
+  port: 4200
+  type: ClusterIP
+
+hpa:
+  name: bird-fact-service-hpa
+  minReplicas: 1
+  maxReplicas: 3
+  cpuTargetUtilization: 15

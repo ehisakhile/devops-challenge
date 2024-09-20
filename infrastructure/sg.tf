@@ -195,6 +195,41 @@ resource "aws_security_group" "k8s_worker_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Prometheus-Grafana Stack SG
+
+  # Prometheus Server (Port 9090)
+  ingress {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Alertmanager (Port 9093)
+  ingress {
+    from_port   = 9093
+    to_port     = 9093
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Node Exporter (Port 9100)
+  ingress {
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Grafana (Port 3000)
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+
   # Egress (outbound) rules (allow all by default)
   egress {
     from_port   = 0
