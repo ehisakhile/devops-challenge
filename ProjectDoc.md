@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project leverages helm/Kubernetes (K8s) to deploy, manage, and scale the bird API which I called *bird-fact-app* and birdImage API which I called *bird-fact-service*. The pods are designed with high availability and scalability in mind, using Kubernetes Horizontal Pod Autoscaling (HPA) to adjust the number of api instances based on real-time resource utilization.
+This project uses Terraform, Docker, Kubernetes (K3s), and Helm to deploy and manage two APIs, providing a streamlined and scalable solution for managing containerized services. I called the bird API *bird-fact-app* and birdImage API, *bird-fact-service*. The pods are designed with high availability and scalability in mind, using Kubernetes Horizontal Pod Autoscaling (HPA) to adjust the number of api instances based on real-time resource utilization.
 
 ## Running Application
 
