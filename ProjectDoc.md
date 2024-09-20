@@ -2,10 +2,7 @@
 
 ## Overview
 
-This project leverages helm/Kubernetes (K8s) to deploy, manage, and scale the bird API which I called *bird-fact-app* and birdImage API which I called *bird-fact-service*. The apis are designed with high availability and scalability in mind, using Kubernetes Horizontal Pod Autoscaling (HPA) to adjust the number of api instances based on real-time resource utilization.
-
-## Setting up Autoscaling
-For high availability and to manage fluctuating workloads, I implemented Horizontal Pod Autoscaling (HPA) in the Kubernetes manifest. This ensures that the number of running pods adjusts automatically based on CPU usage, helping maintain application performance and optimize resource usage. To gather resource usage data such as CPU and memory from the cluster, I used **Metric Server** because it is lightweight and meets the demand of the application.
+This project leverages helm/Kubernetes (K8s) to deploy, manage, and scale the bird API which I called *bird-fact-app* and birdImage API which I called *bird-fact-service*. The pods are designed with high availability and scalability in mind, using Kubernetes Horizontal Pod Autoscaling (HPA) to adjust the number of api instances based on real-time resource utilization.
 
 ## Infrastructure
 The infrastructure was built using Terraform. You can find the infrastructure code in the [infrastructure](./infrastructure/) folder. To security, I set up a bastian host which is in the public subnet, the master and worker nodes are in the private subnet. To access the nodes, I opened SSH port (22). Other ports required by the nodes to work was also set.
@@ -40,10 +37,13 @@ Join Master Node
 curl -sfL https://get.k3s.io | K3S_URL=https://<master-node-ip>:6443 K3S_TOKEN=<Token> sh -
 ```
 
+## Setting up Autoscaling
+For high availability and to manage fluctuating workloads, I implemented Horizontal Pod Autoscaling (HPA) in the Kubernetes manifest. This ensures that the number of running pods adjusts automatically based on CPU usage, helping maintain application performance and optimize resource usage. To gather resource usage data such as CPU and memory from the cluster, I used **Metric Server** because it is lightweight and meets the demand of the application.
+
 
 ## Observability
 
-For observability, I set up a Prometheus-Grafana Stack using Helm
+For observability, I set up a Prometheus-Grafana Stack using Helm, I configured alert manager to send notifications to a Slack channel.
 
 ### Installation steps
 
